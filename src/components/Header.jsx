@@ -157,25 +157,32 @@ export default function Header({
             )}
           </div>
 
-          {/* Quick Role Switcher */}
-          <div className="flex items-center bg-slate-100 border border-slate-200 rounded-lg p-0.5 text-xs">
-            <button
-              onClick={() => setCurrentUserRole('admin')}
-              className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-colors ${
-                currentUserRole === 'admin' ? 'bg-white text-sky-700 shadow-xs' : 'text-slate-500 hover:text-slate-800'
-              }`}
-            >
-              Admin
-            </button>
-            <button
-              onClick={() => setCurrentUserRole('employee')}
-              className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-colors ${
-                currentUserRole === 'employee' ? 'bg-white text-sky-700 shadow-xs' : 'text-slate-500 hover:text-slate-800'
-              }`}
-            >
-              Employee
-            </button>
-          </div>
+          {/* Quick Role Switcher (Restricted to Admin Accounts Only) */}
+          {currentEmployee?.role === 'admin' ? (
+            <div className="flex items-center bg-slate-100 border border-slate-200 rounded-lg p-0.5 text-xs">
+              <button
+                onClick={() => setCurrentUserRole('admin')}
+                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-colors ${
+                  currentUserRole === 'admin' ? 'bg-white text-sky-700 shadow-xs' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                Admin
+              </button>
+              <button
+                onClick={() => setCurrentUserRole('employee')}
+                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-colors ${
+                  currentUserRole === 'employee' ? 'bg-white text-sky-700 shadow-xs' : 'text-slate-500 hover:text-slate-800'
+                }`}
+              >
+                Employee
+              </button>
+            </div>
+          ) : (
+            <div className="px-2.5 py-1 bg-slate-100 border border-slate-200 rounded-lg text-[11px] font-bold text-slate-600 font-mono flex items-center space-x-1">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              <span>Employee Mode</span>
+            </div>
+          )}
 
           {/* User Profile Avatar & Dropdown */}
           <div className="relative">

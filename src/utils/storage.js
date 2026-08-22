@@ -99,3 +99,24 @@ export const savePerformanceData = (data) => {
     localStorage.setItem(KEYS.PERFORMANCE, JSON.stringify(data));
   } catch (err) {}
 };
+
+export const loadAuthSession = () => {
+  try {
+    const session = localStorage.getItem('dayflow_auth_session_v2');
+    return session ? JSON.parse(session) : null;
+  } catch (err) {
+    return null;
+  }
+};
+
+export const saveAuthSession = (session) => {
+  try {
+    localStorage.setItem('dayflow_auth_session_v2', JSON.stringify(session));
+  } catch (err) {}
+};
+
+export const clearAuthSession = () => {
+  try {
+    localStorage.removeItem('dayflow_auth_session_v2');
+  } catch (err) {}
+};

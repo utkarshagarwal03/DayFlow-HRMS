@@ -14,7 +14,8 @@ import {
   loadEmployees, saveEmployees, 
   loadAttendanceLogs, saveAttendanceLogs, 
   loadLeaveRequests, saveLeaveRequests, 
-  loadPerformanceData, savePerformanceData 
+  loadPerformanceData, savePerformanceData,
+  loadAuthSession, saveAuthSession, clearAuthSession
 } from './utils/storage';
 
 export default function App() {
@@ -23,9 +24,11 @@ export default function App() {
   const [leaveRequests, setLeaveRequests] = useState(() => loadLeaveRequests());
   const [performanceData, setPerformanceData] = useState(() => loadPerformanceData());
 
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const savedSession = loadAuthSession();
+
+  const [isAuthenticated, setIsAuthenticated] = useState(() => savedSession ? savedSession.isAuthenticated : false);
   const [activeTab, setActiveTab] = useState('employees');
-  const [currentUserRole, setCurrentUserRole] = useState('admin');
+  const [currentUserRole, setCurrentUserRole] = useState(() => savedSession ? savedSession.currentUserRole : 'employee');
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isProfileViewOnly, setIsProfileViewOnly] = useState(true);
   
@@ -35,7 +38,7 @@ export default function App() {
   const [showPayslipModal, setShowPayslipModal] = useState(false);
   const [payslipEmployee, setPayslipEmployee] = useState(null);
 
-  const [currentEmployee, setCurrentEmployee] = useState(employees[0]);
+  const [currentEmployee, setCurrentEmployee] = useState(() => savedSession ? savedSession.currentEmployee : null);
 
   useEffect(() => {
     saveEmployees(employees);
@@ -54,23 +57,34 @@ export default function App() {
   }, [performanceData]);
 
   const handleLoginSuccess = (userObj, roleType) => {
+    const effectiveRole = userObj.role || roleType || 'employee';
+
     setEmployees(prev => {
       const exists = prev.some(e => e.email.toLowerCase() === userObj.email.toLowerCase() || e.id === userObj.id);
       if (!exists) {
         return [userObj, ...prev];
       }
-      return prev;
+      return prev.map(e => (e.email.toLowerCase() === userObj.email.toLowerCase() || e.id === userObj.id) ? { ...e, ...userObj } : e);
     });
 
     setCurrentEmployee(userObj);
-    setCurrentUserRole(roleType);
+    setCurrentUserRole(effectiveRole);
     setIsAuthenticated(true);
-    setSelectedEmployee(roleType === 'employee' ? userObj : null);
+    setSelectedEmployee(effectiveRole === 'employee' ? userObj : null);
     setIsProfileViewOnly(false);
+
+    saveAuthSession({
+      isAuthenticated: true,
+      currentEmployee: userObj,
+      currentUserRole: effectiveRole
+    });
   };
 
   const handleSignOut = () => {
+    clearAuthSession();
     setIsAuthenticated(false);
+    setCurrentEmployee(null);
+    setSelectedEmployee(null);
   };
 
   const handleRoleToggle = (newRole) => {
