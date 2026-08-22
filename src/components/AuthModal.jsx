@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, Mail, User, Phone, Building2, Upload, Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Lock, Mail, User, Phone, Building2, Upload, Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle2, Shield } from 'lucide-react';
 import { generateEmployeeId } from '../data/mockData';
 import { loginFirebaseUser } from '../services/api';
 
