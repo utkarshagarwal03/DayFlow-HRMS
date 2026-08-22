@@ -157,8 +157,8 @@ export default function Header({
             )}
           </div>
 
-          {/* Quick Role Switcher (Restricted to Admin Accounts Only) */}
-          {currentEmployee?.role === 'admin' ? (
+          {/* Quick Role Switcher (Allows Admins to switch view modes) */}
+          {(currentEmployee?.role?.toLowerCase().includes('admin') || currentEmployee?.role?.toLowerCase().includes('vp') || currentUserRole === 'admin') ? (
             <div className="flex items-center bg-slate-100 border border-slate-200 rounded-lg p-0.5 text-xs">
               <button
                 onClick={() => setCurrentUserRole('admin')}
@@ -166,7 +166,7 @@ export default function Header({
                   currentUserRole === 'admin' ? 'bg-white text-sky-700 shadow-xs' : 'text-slate-500 hover:text-slate-800'
                 }`}
               >
-                Admin
+                Admin Mode
               </button>
               <button
                 onClick={() => setCurrentUserRole('employee')}
@@ -174,7 +174,7 @@ export default function Header({
                   currentUserRole === 'employee' ? 'bg-white text-sky-700 shadow-xs' : 'text-slate-500 hover:text-slate-800'
                 }`}
               >
-                Employee
+                Employee Mode
               </button>
             </div>
           ) : (
