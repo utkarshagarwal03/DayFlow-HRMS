@@ -284,6 +284,37 @@ export default function AuthModal({ isOpen, employees = [], onLoginSuccess }) {
               />
             </div>
 
+            {/* Account Role Assignment :- */}
+            <div className="space-y-1">
+              <label className="block text-slate-700 font-bold">Assign Account Role :-</label>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setSelectedRole('employee')}
+                  className={`py-2 px-3 rounded-lg border text-xs font-bold flex items-center justify-center space-x-1.5 transition-all ${
+                    selectedRole === 'employee'
+                      ? 'bg-sky-50 border-sky-500 text-sky-700 shadow-xs ring-1 ring-sky-500'
+                      : 'bg-slate-50 border-slate-300 text-slate-600 hover:bg-slate-100'
+                  }`}
+                >
+                  <User className="h-3.5 w-3.5 text-sky-600" />
+                  <span>Regular Employee</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedRole('admin')}
+                  className={`py-2 px-3 rounded-lg border text-xs font-bold flex items-center justify-center space-x-1.5 transition-all ${
+                    selectedRole === 'admin'
+                      ? 'bg-sky-50 border-sky-500 text-sky-700 shadow-xs ring-1 ring-sky-500'
+                      : 'bg-slate-50 border-slate-300 text-slate-600 hover:bg-slate-100'
+                  }`}
+                >
+                  <Shield className="h-3.5 w-3.5 text-sky-600" />
+                  <span>HR Admin</span>
+                </button>
+              </div>
+            </div>
+
             {/* Email :- */}
             <div className="space-y-1">
               <label className="block text-slate-700 font-bold">Email :-</label>

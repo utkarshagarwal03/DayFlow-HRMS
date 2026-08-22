@@ -28,7 +28,8 @@ export default function AddEmployeeModal({ isOpen, onClose, onAddEmployee }) {
       id: newEmpId,
       name: formData.name,
       companyName: formData.companyName,
-      role: formData.role,
+      role: formData.accountRole === 'admin' ? (formData.role || 'HR Admin') : (formData.role || 'Software Engineer'),
+      userRole: formData.accountRole || (formData.role.toLowerCase().includes('admin') ? 'admin' : 'employee'),
       department: formData.department,
       status: 'present',
       email: formData.email,
@@ -140,6 +141,34 @@ export default function AddEmployeeModal({ isOpen, onClose, onAddEmployee }) {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-slate-700 font-semibold mb-1">System Access Privilege</label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, accountRole: 'employee' })}
+                className={`py-2 px-3 rounded-lg border text-xs font-bold flex items-center justify-center space-x-1.5 transition-all ${
+                  (formData.accountRole || 'employee') === 'employee'
+                    ? 'bg-sky-50 border-sky-500 text-sky-700 shadow-xs ring-1 ring-sky-500'
+                    : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <span>👤 Regular Employee</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, accountRole: 'admin' })}
+                className={`py-2 px-3 rounded-lg border text-xs font-bold flex items-center justify-center space-x-1.5 transition-all ${
+                  formData.accountRole === 'admin'
+                    ? 'bg-sky-50 border-sky-500 text-sky-700 shadow-xs ring-1 ring-sky-500'
+                    : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <span>🛡️ HR Admin</span>
+              </button>
             </div>
           </div>
 
