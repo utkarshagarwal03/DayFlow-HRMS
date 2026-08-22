@@ -1,11 +1,5 @@
 # 🏢 Dayflow HRMS — Enterprise Human Resource Management Suite
 
-![Dayflow Banner](https://img.shields.io/badge/Dayflow-Enterprise%20HRMS-38bdf8?style=for-the-badge&logo=react)
-![React 19](https://img.shields.io/badge/Frontend-React%2019-61DAFB?style=for-the-badge&logo=react)
-![Express.js](https://img.shields.io/badge/Backend-Express.js-000000?style=for-the-badge&logo=express)
-![Firebase Firestore](https://img.shields.io/badge/Database-Firebase%20Firestore-FFCA28?style=for-the-badge&logo=firebase)
-![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind%20CSS-38BDF8?style=for-the-badge&logo=tailwindcss)
-
 **Dayflow HRMS** is an industrial-grade, enterprise-ready Human Resource Management System built to streamline corporate workforce operations, attendance logging, leave approvals, statutory payroll processing, and performance appraisals.
 
 ---
